@@ -3,8 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import '../models/station.dart';
 
 class FirestoreService {
-  final FirebaseFirestore _db = FirebaseFirestore.instanceFor(
-      app: Firebase.app(), databaseId: 'stations31');
+  final FirebaseFirestore _db;
+
+  FirestoreService()
+      : _db = FirebaseFirestore.instanceFor(
+            app: Firebase.app(), databaseId: 'stations31') {
+    _db.settings = const Settings(persistenceEnabled: true);
+  }
 
   // Add station
   Future<void> addStation(Station station) async {

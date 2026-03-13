@@ -212,9 +212,14 @@ class _AddStationScreenState extends State<AddStationScreen> {
                                       controller: _latitudeController,
                                       labelText: 'Latitude',
                                       icon: Icons.location_on,
-                                      keyboardType: TextInputType.number,
-                                      validator: (value) =>
-                                          value!.isEmpty ? 'Required' : null,
+                                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) return 'Required';
+                                        final numValue = double.tryParse(value);
+                                        if (numValue == null) return 'Invalid number';
+                                        if (numValue < -90 || numValue > 90) return 'Must be between -90 and 90';
+                                        return null;
+                                      },
                                     ),
                                   ),
                                   const SizedBox(width: 24),
@@ -223,9 +228,14 @@ class _AddStationScreenState extends State<AddStationScreen> {
                                       controller: _longitudeController,
                                       labelText: 'Longitude',
                                       icon: Icons.location_on,
-                                      keyboardType: TextInputType.number,
-                                      validator: (value) =>
-                                          value!.isEmpty ? 'Required' : null,
+                                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) return 'Required';
+                                        final numValue = double.tryParse(value);
+                                        if (numValue == null) return 'Invalid number';
+                                        if (numValue < -180 || numValue > 180) return 'Must be between -180 and 180';
+                                        return null;
+                                      },
                                     ),
                                   ),
                                 ],
@@ -280,8 +290,12 @@ class _AddStationScreenState extends State<AddStationScreen> {
                                       labelText: 'Total Charging Ports',
                                       icon: Icons.onetwothree,
                                       keyboardType: TextInputType.number,
-                                      validator: (value) =>
-                                          value!.isEmpty ? 'Required' : null,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) return 'Required';
+                                        final intValue = int.tryParse(value);
+                                        if (intValue == null || intValue <= 0) return 'Must be > 0';
+                                        return null;
+                                      },
                                     ),
                                   ),
                                   const SizedBox(width: 24),
@@ -290,9 +304,13 @@ class _AddStationScreenState extends State<AddStationScreen> {
                                       controller: _priceController,
                                       labelText: 'Price per kWh',
                                       icon: Icons.attach_money,
-                                      keyboardType: TextInputType.number,
-                                      validator: (value) =>
-                                          value!.isEmpty ? 'Required' : null,
+                                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) return 'Required';
+                                        final numValue = double.tryParse(value);
+                                        if (numValue == null || numValue < 0) return 'Invalid price';
+                                        return null;
+                                      },
                                     ),
                                   ),
                                 ],
